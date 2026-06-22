@@ -130,7 +130,7 @@ namespace SoundMeter
 
             var subtitle = new Label
             {
-                Text = currentDevice == null ? "Current output: unknown" : "Current output: " + currentDevice.Name,
+                Text = currentDevice == null ? "현재 출력: 알 수 없음" : "현재 출력: " + currentDevice.Name,
                 AutoSize = false,
                 Location = new Point(16, 42),
                 Size = new Size(350, 24),
@@ -158,7 +158,7 @@ namespace SoundMeter
             {
                 var empty = new Label
                 {
-                    Text = "No configured output devices found.",
+                    Text = "설정된 출력 장치를 찾지 못했습니다.",
                     Width = 350,
                     Height = 68,
                     TextAlign = ContentAlignment.MiddleCenter,
@@ -195,7 +195,7 @@ namespace SoundMeter
 
             var hotkey = new Label
             {
-                Text = hotkeyRegistered ? hotkeyText : hotkeyText + " unavailable",
+                Text = hotkeyRegistered ? hotkeyText : hotkeyText + " 사용 불가",
                 AutoSize = false,
                 Location = new Point(0, 6),
                 Size = new Size(170, 34),
@@ -204,7 +204,7 @@ namespace SoundMeter
             };
             footer.Controls.Add(hotkey);
 
-            var settings = CreateFooterButton("Settings");
+            var settings = CreateFooterButton("설정");
             settings.Location = new Point(180, 9);
             settings.Click += delegate
             {
@@ -213,7 +213,7 @@ namespace SoundMeter
             };
             footer.Controls.Add(settings);
 
-            var exit = CreateFooterButton("Exit");
+            var exit = CreateFooterButton("종료");
             exit.Location = new Point(272, 9);
             exit.Click += delegate
             {

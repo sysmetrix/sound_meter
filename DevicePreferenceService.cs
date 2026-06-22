@@ -50,8 +50,8 @@ namespace SoundMeter
                 second = devices[1];
             }
 
-            ApplyDeviceOne(settings, first, "Speaker");
-            ApplyDeviceTwo(settings, second, "Voicemeeter");
+            ApplyDeviceOne(settings, first, "스피커");
+            ApplyDeviceTwo(settings, second, "가상 오디오");
             return first != null || second != null;
         }
 
@@ -64,12 +64,12 @@ namespace SoundMeter
 
             if (first != null)
             {
-                configured.Add(new ConfiguredDevice(1, CleanLabel(settings.DeviceOneAlias, "Output 1"), first));
+                configured.Add(new ConfiguredDevice(1, CleanLabel(settings.DeviceOneAlias, "출력 1"), first));
             }
 
             if (second != null && !ReferenceEquals(first, second))
             {
-                configured.Add(new ConfiguredDevice(2, CleanLabel(settings.DeviceTwoAlias, "Output 2"), second));
+                configured.Add(new ConfiguredDevice(2, CleanLabel(settings.DeviceTwoAlias, "출력 2"), second));
             }
 
             return configured;

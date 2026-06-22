@@ -93,7 +93,7 @@ namespace SoundMeter
                     current,
                     settings.GetHotkeyText(),
                     hotkeyRegistered,
-                    delegate(ConfiguredDevice device) { SwitchToDevice(device.Device, "Output changed"); },
+                    delegate(ConfiguredDevice device) { SwitchToDevice(device.Device, "출력 장치 변경됨"); },
                     OpenSettings,
                     ExitThread);
 
@@ -114,20 +114,20 @@ namespace SoundMeter
             {
                 IList<AudioDevice> devices = audioService.GetOutputDevices();
                 AudioDevice current = FindCurrentDevice(devices);
-                menu.Items.Add(current == null ? "Current output: unknown" : "Current output: " + current.Name).Enabled = false;
+                menu.Items.Add(current == null ? "현재 출력: 알 수 없음" : "현재 출력: " + current.Name).Enabled = false;
             }
             catch
             {
-                menu.Items.Add("Current output: unavailable").Enabled = false;
+                menu.Items.Add("현재 출력: 확인할 수 없음").Enabled = false;
             }
 
-            menu.Items.Add(hotkeyRegistered ? "Hotkey: " + settings.GetHotkeyText() : "Hotkey unavailable: " + settings.GetHotkeyText()).Enabled = false;
+            menu.Items.Add(hotkeyRegistered ? "단축키: " + settings.GetHotkeyText() : "단축키 사용 불가: " + settings.GetHotkeyText()).Enabled = false;
             menu.Items.Add(new ToolStripSeparator());
-            menu.Items.Add("Open", null, delegate { ShowQuickSwitcher(); });
-            menu.Items.Add("Settings", null, delegate { OpenSettings(); });
-            menu.Items.Add("Refresh", null, delegate { UpdateTrayText(); });
+            menu.Items.Add("열기", null, delegate { ShowQuickSwitcher(); });
+            menu.Items.Add("설정", null, delegate { OpenSettings(); });
+            menu.Items.Add("새로고침", null, delegate { UpdateTrayText(); });
             menu.Items.Add(new ToolStripSeparator());
-            menu.Items.Add("Exit", null, delegate { ExitThread(); });
+            menu.Items.Add("종료", null, delegate { ExitThread(); });
 
             menu.Closed += delegate { menu.Dispose(); };
             menu.Show(Cursor.Position);
@@ -140,7 +140,7 @@ namespace SoundMeter
                 IList<AudioDevice> devices = audioService.GetOutputDevices();
                 if (devices.Count == 0)
                 {
-                    MessageBox.Show("No active output devices were found.", "Sound Meter", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("활성화된 출력 장치를 찾지 못했습니다.", "Sound Meter", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
 
@@ -173,7 +173,7 @@ namespace SoundMeter
                 IList<ConfiguredDevice> configured = preferenceService.GetConfiguredDevices(settings, allDevices);
                 if (configured.Count < 2)
                 {
-                    notifyIcon.ShowBalloonTip(2500, "Switch unavailable", "Open Settings and choose two connected outputs.", ToolTipIcon.Warning);
+                    notifyIcon.ShowBalloonTip(2500, "전환할 수 없음", "설정에서 연결된 출력 장치 2개를 선택하세요.", ToolTipIcon.Warning);
                     OpenSettings();
                     return;
                 }
@@ -189,7 +189,7 @@ namespace SoundMeter
                 }
 
                 ConfiguredDevice next = currentIndex == 0 ? configured[1] : configured[0];
-                SwitchToDevice(next.Device, "Hotkey switch");
+                SwitchToDevice(next.Device, "단축키 전환");
             }
             catch (Exception ex)
             {
@@ -207,7 +207,7 @@ namespace SoundMeter
             }
             catch (Exception ex)
             {
-                notifyIcon.ShowBalloonTip(2500, "Switch failed", "Check that the device is connected.", ToolTipIcon.Warning);
+                notifyIcon.ShowBalloonTip(2500, "전환 실패", "장치가 연결되어 있는지 확인하세요.", ToolTipIcon.Warning);
                 ShowError(ex);
             }
         }

@@ -25,10 +25,15 @@ namespace SoundMeterInstaller
         private CheckBox desktopShortcut;
         private CheckBox launchAfterInstall;
         private Label status;
+        private readonly string installDirectory = Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+            "Programs",
+            "SoundMeter");
 
         public InstallerForm()
         {
-            Text = "Install Sound Meter";
+            Text = "Sound Meter 설치";
+            Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath);
             Font = new Font("Segoe UI", 9F);
             BackColor = Color.FromArgb(250, 250, 250);
             ForeColor = Color.FromArgb(32, 32, 32);
@@ -36,7 +41,7 @@ namespace SoundMeterInstaller
             MaximizeBox = false;
             MinimizeBox = false;
             StartPosition = FormStartPosition.CenterScreen;
-            ClientSize = new Size(470, 270);
+            ClientSize = new Size(520, 320);
 
             BuildLayout();
         }
@@ -54,16 +59,25 @@ namespace SoundMeterInstaller
 
             var subtitle = new Label
             {
-                Text = "A small tray switcher for Windows output devices.",
+                Text = "Windows 출력 장치를 빠르게 전환하는 트레이 유틸리티입니다.",
                 Location = new Point(28, 58),
-                Size = new Size(400, 24),
+                Size = new Size(450, 24),
                 ForeColor = Color.FromArgb(96, 96, 96)
             };
             Controls.Add(subtitle);
 
-            startWithWindows = CreateCheckBox("Start with Windows", 30, 106, true);
-            desktopShortcut = CreateCheckBox("Create desktop shortcut", 30, 138, true);
-            launchAfterInstall = CreateCheckBox("Launch after install", 30, 170, true);
+            var installPath = new Label
+            {
+                Text = "설치 위치: " + installDirectory,
+                Location = new Point(30, 92),
+                Size = new Size(460, 38),
+                ForeColor = Color.FromArgb(72, 72, 72)
+            };
+            Controls.Add(installPath);
+
+            startWithWindows = CreateCheckBox("Windows 시작 시 자동 실행", 30, 142, true);
+            desktopShortcut = CreateCheckBox("바탕화면 바로가기 만들기", 30, 174, true);
+            launchAfterInstall = CreateCheckBox("설치 후 바로 실행", 30, 206, true);
 
             Controls.Add(startWithWindows);
             Controls.Add(desktopShortcut);
@@ -72,20 +86,20 @@ namespace SoundMeterInstaller
             status = new Label
             {
                 Text = string.Empty,
-                Location = new Point(30, 214),
+                Location = new Point(30, 264),
                 Size = new Size(260, 28),
                 ForeColor = Color.FromArgb(96, 96, 96),
                 TextAlign = ContentAlignment.MiddleLeft
             };
             Controls.Add(status);
 
-            var cancel = CreateButton("Cancel", false);
-            cancel.Location = new Point(284, 216);
+            var cancel = CreateButton("취소", false);
+            cancel.Location = new Point(334, 266);
             cancel.Click += delegate { Close(); };
             Controls.Add(cancel);
 
-            var install = CreateButton("Install", true);
-            install.Location = new Point(376, 216);
+            var install = CreateButton("설치", true);
+            install.Location = new Point(426, 266);
             install.Click += InstallOnClick;
             Controls.Add(install);
         }
@@ -134,16 +148,16 @@ namespace SoundMeterInstaller
         {
             try
             {
-                status.Text = "Installing...";
+                status.Text = "설치 중...";
                 UseWaitCursor = true;
                 Install();
-                status.Text = "Installed.";
-                MessageBox.Show("Sound Meter has been installed.", "Sound Meter", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                status.Text = "설치 완료";
+                MessageBox.Show("Sound Meter 설치가 완료되었습니다.", "Sound Meter", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 Close();
             }
             catch (Exception ex)
             {
-                status.Text = "Install failed.";
+                status.Text = "설치 실패";
                 MessageBox.Show(ex.Message, "Sound Meter", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             finally
@@ -154,10 +168,7 @@ namespace SoundMeterInstaller
 
         private void Install()
         {
-            string installDir = Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-                "Programs",
-                "SoundMeter");
+            string installDir = installDirectory;
             string exePath = Path.Combine(installDir, "SoundMeter.exe");
 
             Directory.CreateDirectory(installDir);
@@ -174,7 +185,7 @@ namespace SoundMeterInstaller
                 "Sound Meter");
             Directory.CreateDirectory(startMenuDir);
             CreateShortcut(Path.Combine(startMenuDir, "Sound Meter.lnk"), exePath, string.Empty, exePath);
-            CreateShortcut(Path.Combine(startMenuDir, "Uninstall Sound Meter.lnk"), Path.Combine(installDir, "UninstallSoundMeter.cmd"), string.Empty, exePath);
+            CreateShortcut(Path.Combine(startMenuDir, "Sound Meter 제거.lnk"), Path.Combine(installDir, "UninstallSoundMeter.cmd"), string.Empty, exePath);
 
             if (desktopShortcut.Checked)
             {

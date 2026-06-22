@@ -12,15 +12,42 @@ if (-not (Test-Path $compiler)) {
 $outDir = Join-Path $PSScriptRoot "bin"
 $objDir = Join-Path $PSScriptRoot "obj"
 $distDir = Join-Path $PSScriptRoot "dist"
+$assetsDir = Join-Path $PSScriptRoot "assets"
+$iconPath = Join-Path $assetsDir "SoundMeter.ico"
 New-Item -ItemType Directory -Force -Path $outDir | Out-Null
 New-Item -ItemType Directory -Force -Path $objDir | Out-Null
 New-Item -ItemType Directory -Force -Path $distDir | Out-Null
+New-Item -ItemType Directory -Force -Path $assetsDir | Out-Null
+
+& $compiler `
+    /nologo `
+    /codepage:65001 `
+    /target:exe `
+    /platform:anycpu `
+    /out:"$objDir\IconGenerator.exe" `
+    /reference:System.dll `
+    /reference:System.Drawing.dll `
+    "$PSScriptRoot\IconGenerator.cs" `
+    "$PSScriptRoot\AudioIconFactory.cs"
+
+if ($LASTEXITCODE -ne 0) {
+    throw "Icon generator build failed with exit code $LASTEXITCODE."
+}
+
+& "$objDir\IconGenerator.exe" "$iconPath"
+
+if ($LASTEXITCODE -ne 0) {
+    throw "Icon generation failed with exit code $LASTEXITCODE."
+}
+
+Write-Host "Generated: $iconPath"
 
 & $compiler `
     /nologo `
     /codepage:65001 `
     /target:winexe `
     /platform:anycpu `
+    /win32icon:"$iconPath" `
     /out:"$outDir\SoundMeter.exe" `
     /reference:System.dll `
     /reference:System.Core.dll `
@@ -82,6 +109,7 @@ $utf8NoBom = New-Object System.Text.UTF8Encoding $false
     /codepage:65001 `
     /target:winexe `
     /platform:anycpu `
+    /win32icon:"$iconPath" `
     /out:"$distDir\SoundMeterSetup.exe" `
     /reference:System.dll `
     /reference:System.Core.dll `

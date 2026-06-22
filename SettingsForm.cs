@@ -23,7 +23,8 @@ namespace SoundMeter
             this.devices = devices;
             this.preferenceService = preferenceService;
 
-            Text = "Sound Meter Settings";
+            Text = "Sound Meter 설정";
+            Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath);
             Font = new Font("Segoe UI", 9F);
             BackColor = Color.FromArgb(250, 250, 250);
             ForeColor = Color.FromArgb(32, 32, 32);
@@ -55,30 +56,30 @@ namespace SoundMeter
 
             var subtitle = new Label
             {
-                Text = "Choose the two outputs and the toggle key.",
+                Text = "전환할 출력 장치 2개와 단축키를 선택하세요.",
                 Location = new Point(26, 52),
                 Size = new Size(440, 24),
                 ForeColor = Color.FromArgb(96, 96, 96)
             };
             Controls.Add(subtitle);
 
-            AddLabel("Output 1", 28, 96);
+            AddLabel("출력 1", 28, 96);
             deviceOneCombo = CreateDeviceCombo(124, 92);
             Controls.Add(deviceOneCombo);
 
-            AddLabel("Name", 28, 132);
+            AddLabel("표시 이름", 28, 132);
             aliasOneText = CreateTextBox(124, 128, settings.DeviceOneAlias);
             Controls.Add(aliasOneText);
 
-            AddLabel("Output 2", 28, 174);
+            AddLabel("출력 2", 28, 174);
             deviceTwoCombo = CreateDeviceCombo(124, 170);
             Controls.Add(deviceTwoCombo);
 
-            AddLabel("Name", 28, 210);
+            AddLabel("표시 이름", 28, 210);
             aliasTwoText = CreateTextBox(124, 206, settings.DeviceTwoAlias);
             Controls.Add(aliasTwoText);
 
-            AddLabel("Hotkey", 28, 252);
+            AddLabel("단축키", 28, 252);
             hotkeyCombo = new ComboBox
             {
                 DropDownStyle = ComboBoxStyle.DropDownList,
@@ -93,12 +94,12 @@ namespace SoundMeter
             }
             Controls.Add(hotkeyCombo);
 
-            var cancel = CreateButton("Cancel", false);
+            var cancel = CreateButton("취소", false);
             cancel.Location = new Point(316, 284);
             cancel.Click += delegate { DialogResult = DialogResult.Cancel; Close(); };
             Controls.Add(cancel);
 
-            var save = CreateButton("Save", true);
+            var save = CreateButton("저장", true);
             save.Location = new Point(414, 284);
             save.Click += SaveOnClick;
             Controls.Add(save);
@@ -220,13 +221,13 @@ namespace SoundMeter
 
             if (first == null || second == null)
             {
-                MessageBox.Show("Select two output devices.", "Sound Meter", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("출력 장치 2개를 선택하세요.", "Sound Meter", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
             if (string.Equals(first.Device.Id, second.Device.Id, StringComparison.OrdinalIgnoreCase))
             {
-                MessageBox.Show("Choose two different devices.", "Sound Meter", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("서로 다른 장치 2개를 선택하세요.", "Sound Meter", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 

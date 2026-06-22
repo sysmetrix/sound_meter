@@ -18,8 +18,8 @@ namespace SoundMeter
 
         public AppSettings()
         {
-            DeviceOneAlias = "Speaker";
-            DeviceTwoAlias = "Voicemeeter";
+            DeviceOneAlias = "스피커";
+            DeviceTwoAlias = "가상 오디오";
             HotkeyKey = "A";
         }
 
@@ -83,7 +83,7 @@ namespace SoundMeter
 
         public string GetHotkeyText()
         {
-            return "Ctrl + Alt + " + GetHotkeyKey().ToString();
+            return "Ctrl + Alt + " + GetHotkeyKey();
         }
 
         public bool HasDeviceSelection()
