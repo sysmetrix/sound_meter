@@ -229,6 +229,7 @@ namespace SoundMeterInstaller
                 "reg delete HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run /v SoundMeter /f >nul 2>nul\r\n" +
                 "del \"%USERPROFILE%\\Desktop\\Sound Meter.lnk\" >nul 2>nul\r\n" +
                 "rmdir /S /Q \"%APPDATA%\\Microsoft\\Windows\\Start Menu\\Programs\\Sound Meter\" >nul 2>nul\r\n" +
+                "rmdir /S /Q \"%APPDATA%\\SoundMeter\" >nul 2>nul\r\n" +
                 "cd /d \"%LOCALAPPDATA%\\Programs\"\r\n" +
                 "rmdir /S /Q \"SoundMeter\"\r\n";
             File.WriteAllText(path, content);
