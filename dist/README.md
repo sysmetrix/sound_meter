@@ -20,6 +20,25 @@ SoundMeterSetup.exe
 
 설치 후 작업 표시줄 오른쪽 아래의 트레이 영역에서 `Sound Meter` 아이콘을 찾으면 됩니다.
 
+## 추가 설치가 필요한가요?
+
+대부분의 Windows 11 사용자는 `SoundMeterSetup.exe`만 설치하면 바로 사용할 수 있습니다.
+
+별도로 설치할 필요가 없는 것:
+
+- .NET SDK
+- Visual Studio
+- Git
+- Python
+- 별도 오디오 전환 프로그램
+
+주의할 점:
+
+- Sound Meter는 새 오디오 장치나 가상 오디오 드라이버를 설치하지 않습니다.
+- 이미 Windows에 보이는 출력 장치 2개를 골라 전환하는 프로그램입니다.
+- VoiceMeeter 장치를 선택해서 쓰려면 VoiceMeeter는 사용자의 PC에 미리 설치되어 있어야 합니다.
+- USB 헤드셋, 스피커, HDMI 모니터처럼 이미 연결된 장치는 추가 설치 없이 선택할 수 있습니다.
+
 ## Windows 경고가 뜨는 경우
 
 처음 실행할 때 Windows가 아래와 비슷한 경고를 보여줄 수 있습니다.

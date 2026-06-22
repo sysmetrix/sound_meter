@@ -6,6 +6,16 @@
 
 받은 파일을 실행하면 설치가 시작됩니다.
 
+## 다른 프로그램도 설치해야 하나요?
+
+대부분의 Windows 11 PC에서는 필요 없습니다.
+
+`SoundMeterSetup.exe`만 설치하면 됩니다. .NET SDK, Visual Studio, Git, Python 같은 개발 도구는 필요하지 않습니다.
+
+단, Sound Meter는 새 오디오 장치를 만들어주는 프로그램은 아닙니다. 이미 Windows에 보이는 출력 장치 2개를 골라 전환합니다.
+
+VoiceMeeter 장치를 선택해서 쓰려면 VoiceMeeter는 사용자의 PC에 미리 설치되어 있어야 합니다.
+
 ## Windows 경고가 뜨면
 
 처음 실행할 때 `Windows의 PC 보호` 또는 `알 수 없는 게시자` 경고가 뜰 수 있습니다.
