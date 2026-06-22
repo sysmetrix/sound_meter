@@ -1,0 +1,10 @@
+bin/
+obj/
+*.user
+*.suo
+*.log
+
+# Keep the distributable installer under version control.
+!dist/
+!dist/SoundMeterSetup.exe
+!dist/README.md
